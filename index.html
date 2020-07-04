@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <title>Syslog Search</title>
+  <script src="js/angularjs.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="row">
+      <div class="small-12 medium-12 large-12 columns">
+        <h1 class="text-center">Syslog file search.</h1>
+      </div>
+    </div>
+  </header>
+  <nav class="row">
+    <div class="small-12 medium-12 large-12 columns">
+      <div class="callout noborder">
+        <ul class="menu icon-top">
+          <li>
+            <a href="javascript:void(0)" onClick="window.print();return false;" class="nav__button--primary">
+              <i class="fi-list">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+                </svg>
+              </i>
+              <span class="nav__button--title">Print</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="result" ng-app="myApp" ng-controller="logdata">
+    <div class="row">
+      <div class="small-12 medium-12 large-12 columns">
+        <table>
+          <thead>
+            <tr>
+              <th class="small-2"><label>ID<input type="text" placeholder="ID" ng-model="search.ID"></label></th>
+              <th class="small-3"><label>ReceivedAt<input type="text" placeholder="ReceivedAt" ng-model="search.ReceivedAt"></label></th>
+              <th class="small-7"><label>Message<input type="text" placeholder="Message" ng-model="search.Message"></label></th>
+            </tr>
+            <tr>
+              <th>ID</th>
+              <th>ReceivedAt</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="x in names | filter:search:strict | limitTo:totalDisplayed">
+              <td>{{ x.ID}}</td>
+              <td>{{ x.ReceivedAt }}</td>
+              <td>{{ x.Message }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="pagination text-center" role="navigation" aria-label="Pagination" id="latest">
+          <li><a href="#latest" ng-click="loadMore()">Load later data</a></li>
+          <li><a href="#latest" ng-click="loadMore2()">Load later 300 data</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <script src="js/jquery.js"></script>
+  <script src="js/what-input.js"></script>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('logdata', function($scope, $http) {
+        $http.get('array.php')
+        .success(function(response) {
+            $scope.names = response;
+        });
+
+        $scope.totalDisplayed = 50;
+        $scope.loadMore = function () {
+          $scope.totalDisplayed += 50;
+        };
+        $scope.loadMore2 = function () {
+          $scope.totalDisplayed += 300;
+        };
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+::-moz-selection {
+  background-color: #352726;
+  color: #fefefe;
+  text-shadow: none; }
+
+::selection {
+  background-color: #352726;
+  color: #fefefe;
+  text-shadow: none; }
+
+.nav__button--primary {
+  background-color: #009688; }
+  .nav__button--primary:hover {
+    background-color: #00635a; }
+
+.nav__button--title {
+  color: #fefefe; }
+
+.callout.noborder {
+  border: none; }
+
+.result {
+  font-size: 0.875rem; }
+
+[type="text"] {
+  font-size: 0.875rem;
+  box-shadow: none;
+  -webkit-transition: none;
+  transition: none; }
+  [type="text"]:focus {
+    box-shadow: none;
+    border-color: #0a0a0a; }
